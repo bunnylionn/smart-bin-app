@@ -5,6 +5,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
+const axios = require('axios');
 
 const app = express();
 const server = http.createServer(app);
@@ -58,6 +59,11 @@ const db = new sqlite3.Database(dbPath, (err) => {
         server.listen(PORT, () => {
           console.log(`Server running on port ${PORT}`);
           console.log(`API endpoint: http://localhost:${PORT}/api/bins/data`);
+          
+          // Keep-alive ping to Render server
+          axios.get('https://smart-bin-app.onrender.com')
+            .then(() => console.log('Render server ping successful'))
+            .catch(err => console.log('Render server ping failed:', err.message));
         });
       }
     });
