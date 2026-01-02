@@ -1,0 +1,358 @@
+.app-shell {
+  min-height: 100vh;
+  background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.05), transparent 25%),
+    radial-gradient(circle at 80% 0%, rgba(255, 255, 255, 0.06), transparent 25%),
+    linear-gradient(135deg, #0f172a 0%, #111827 45%, #0b1021 100%);
+  color: #e5e7eb;
+  padding: 24px;
+}
+
+.app-shell * {
+  box-sizing: border-box;
+}
+
+.shell-card {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 32px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  text-align: center;
+}
+
+.shell-title {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.shell-subtitle {
+  margin-top: 8px;
+  color: #9ca3af;
+}
+
+.top-bar {
+  max-width: 1100px;
+  margin: 0 auto 16px;
+  padding: 18px 20px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(16, 185, 129, 0.1);
+  display: grid;
+  place-items: center;
+  font-size: 20px;
+}
+
+.brand-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: #f9fafb;
+}
+
+.brand-subtitle {
+  font-size: 14px;
+  color: #9ca3af;
+}
+
+.status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: rgba(16, 185, 129, 0.12);
+  color: #34d399;
+  border-radius: 999px;
+  font-weight: 600;
+  border: 1px solid rgba(52, 211, 153, 0.2);
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dot-online {
+  background: #22c55e;
+  box-shadow: 0 0 0 6px rgba(34, 197, 94, 0.2);
+}
+
+.dot-offline {
+  background: #ef4444;
+  box-shadow: 0 0 0 6px rgba(239, 68, 68, 0.18);
+}
+
+.layout {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.status-panel {
+  padding: 20px 22px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.panel-ok {
+  border-color: rgba(52, 211, 153, 0.35);
+  box-shadow: 0 0 0 1px rgba(52, 211, 153, 0.12), 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+.panel-full {
+  border-color: rgba(239, 68, 68, 0.35);
+  box-shadow: 0 0 0 1px rgba(239, 68, 68, 0.12), 0 15px 40px rgba(0, 0, 0, 0.25);
+}
+
+.status-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.status-text {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.status-icon {
+  font-size: 32px;
+}
+
+.status-title {
+  font-size: 24px;
+  font-weight: 800;
+  color: #f9fafb;
+}
+
+.status-subtitle {
+  color: #9ca3af;
+}
+
+.status-meta {
+  text-align: right;
+}
+
+.meta-label {
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+.meta-value {
+  font-weight: 700;
+  color: #f3f4f6;
+  margin: 2px 0;
+}
+
+.meta-time {
+  font-size: 13px;
+  color: #9ca3af;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  padding: 18px 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.card-title {
+  font-weight: 700;
+  font-size: 16px;
+  color: #f9fafb;
+}
+
+.card-subtitle {
+  color: #9ca3af;
+  font-size: 13px;
+}
+
+.metric-large {
+  margin: 6px 0 8px;
+}
+
+.metric-value {
+  font-size: 34px;
+  font-weight: 800;
+  color: #f3f4f6;
+}
+
+.progress {
+  width: 100%;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  border-radius: 999px;
+}
+
+.progress-bar.fill {
+  background: linear-gradient(90deg, #f43f5e, #ef4444);
+}
+
+.progress-bar.weight {
+  background: linear-gradient(90deg, #8b5cf6, #a855f7);
+}
+
+.card-foot {
+  margin-top: 10px;
+  color: #9ca3af;
+  font-size: 13px;
+}
+
+.weight-card {
+  background: linear-gradient(160deg, rgba(88, 28, 135, 0.2), rgba(37, 99, 235, 0.08));
+  border-color: rgba(124, 58, 237, 0.35);
+}
+
+.weight-alert {
+  border-color: rgba(239, 68, 68, 0.4);
+  box-shadow: 0 0 0 1px rgba(239, 68, 68, 0.14), 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+.fill-card {
+  background: linear-gradient(160deg, rgba(15, 118, 110, 0.2), rgba(16, 185, 129, 0.08));
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+.activity-card {
+  margin-top: 4px;
+}
+
+.activity-list {
+  max-height: 340px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-right: 4px;
+}
+
+.activity-row {
+  display: grid;
+  grid-template-columns: 1fr 2fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 12px;
+}
+
+.activity-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #e5e7eb;
+  font-weight: 600;
+}
+
+.activity-middle {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  color: #d1d5db;
+}
+
+.activity-label {
+  color: #9ca3af;
+  font-size: 13px;
+}
+
+.activity-value {
+  font-weight: 700;
+}
+
+.status-tag {
+  padding: 6px 10px;
+  border-radius: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  justify-self: end;
+}
+
+.tag-full {
+  background: rgba(239, 68, 68, 0.16);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.35);
+}
+
+.tag-ok {
+  background: rgba(16, 185, 129, 0.16);
+  color: #6ee7b7;
+  border: 1px solid rgba(16, 185, 129, 0.35);
+}
+
+.empty {
+  text-align: center;
+  color: #9ca3af;
+  padding: 16px;
+}
+
+@media (max-width: 768px) {
+  .app-shell {
+    padding: 16px;
+  }
+  .top-bar,
+  .layout {
+    width: 100%;
+  }
+  .status-heading {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .status-meta {
+    text-align: left;
+  }
+  .activity-row {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+  .activity-middle {
+    gap: 8px;
+  }
+}
+
