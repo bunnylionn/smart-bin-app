@@ -8,9 +8,15 @@ const path = require('path');
 
 const app = express();
 const server = http.createServer(app);
+
+// Use Render's PORT or default to 3001
+const PORT = process.env.PORT || 3001;
+
+// Allow CORS for your specific Vercel frontend (Optional but safer)
+// For now, origin: "*" is fine for testing.
 const io = socketIo(server, {
   cors: {
-    origin: "*",
+    origin: "*", 
     methods: ["GET", "POST"]
   }
 });
@@ -21,13 +27,16 @@ app.use(bodyParser.json());
 app.use(express.json());
 
 // Initialize SQLite database
+// NOTE: On Render Free Tier, this file wipes on every deploy/restart.
 const dbPath = path.join(__dirname, 'bins.db');
+
 const db = new sqlite3.Database(dbPath, (err) => {
   if (err) {
     console.error('Error opening database:', err.message);
   } else {
     console.log('Connected to SQLite database');
-    // Create tables if they don't exist
+    
+    // 1. Create Tables
     db.run(`CREATE TABLE IF NOT EXISTS bin_data (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       device_id TEXT NOT NULL,
@@ -39,12 +48,19 @@ const db = new sqlite3.Database(dbPath, (err) => {
       if (err) {
         console.error('Error creating table:', err.message);
       } else {
-        console.log('Database table ready');
+        console.log('Database table "bin_data" ready');
+
+        // 2. Create Index
+        db.run(`CREATE INDEX IF NOT EXISTS idx_device_timestamp ON bin_data(device_id, timestamp DESC)`);
+
+        // 3. START SERVER ONLY AFTER DB IS READY
+        // This prevents the "no such table" error
+        server.listen(PORT, () => {
+          console.log(`Server running on port ${PORT}`);
+          console.log(`API endpoint: http://localhost:${PORT}/api/bins/data`);
+        });
       }
     });
-
-    // Create index for faster queries
-    db.run(`CREATE INDEX IF NOT EXISTS idx_device_timestamp ON bin_data(device_id, timestamp DESC)`);
   }
 });
 
@@ -81,7 +97,7 @@ app.post('/api/bins/data', (req, res) => {
 
     io.emit('binUpdate', binData);
     
-    console.log(`Data received from ${device_id}: ${status} - Distance: ${distance}cm, Weight: ${weight}kg`);
+    console.log(`Data from ${device_id}: ${status} | Dist: ${distance}cm | Wgt: ${weight}kg`);
     res.status(200).json({ success: true, message: 'Data received and broadcasted' });
   });
 
@@ -105,8 +121,7 @@ app.get('/api/bins', (req, res) => {
 
 // API endpoint to get latest status for each device
 app.get('/api/bins/latest', (req, res) => {
-  db.all(`SELECT b1.* 
-          FROM bin_data b1
+  db.all(`SELECT b1.* FROM bin_data b1
           INNER JOIN (
             SELECT device_id, MAX(timestamp) as max_timestamp
             FROM bin_data
@@ -148,8 +163,7 @@ io.on('connection', (socket) => {
   console.log('Client connected:', socket.id);
 
   // Send latest data when client connects
-  db.all(`SELECT b1.* 
-          FROM bin_data b1
+  db.all(`SELECT b1.* FROM bin_data b1
           INNER JOIN (
             SELECT device_id, MAX(timestamp) as max_timestamp
             FROM bin_data
@@ -164,13 +178,6 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     console.log('Client disconnected:', socket.id);
   });
-});
-
-const PORT = process.env.PORT || 3001;
-
-server.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-  console.log(`API endpoint: http://localhost:${PORT}/api/bins/data`);
 });
 
 // Graceful shutdown
