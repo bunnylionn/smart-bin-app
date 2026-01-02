@@ -125,6 +125,12 @@
   box-shadow: 0 0 0 1px rgba(239, 68, 68, 0.12), 0 15px 40px rgba(0, 0, 0, 0.25);
 }
 
+.panel-offline {
+  border-color: rgba(156, 163, 175, 0.35);
+  box-shadow: 0 0 0 1px rgba(156, 163, 175, 0.12), 0 15px 40px rgba(0, 0, 0, 0.2);
+  opacity: 0.7;
+}
+
 .status-heading {
   display: flex;
   justify-content: space-between;
@@ -233,6 +239,16 @@
 
 .progress-bar.weight {
   background: linear-gradient(90deg, #8b5cf6, #a855f7);
+}
+
+.progress-offline {
+  background: linear-gradient(90deg, #6b7280, #9ca3af) !important;
+  opacity: 0.6;
+}
+
+.card-offline {
+  opacity: 0.7;
+  filter: grayscale(30%);
 }
 
 .card-foot {

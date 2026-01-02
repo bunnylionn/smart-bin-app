@@ -40,7 +40,22 @@ function App() {
     return date.toLocaleTimeString([], { hour12: true });
   };
 
+  // Heartbeat check: returns true if data is older than 60 seconds
+  const isDataStale = (timestamp) => {
+    if (!timestamp) return true;
+    const now = new Date();
+    const dataTime = timestamp instanceof Date ? timestamp : new Date(timestamp);
+    const diffMs = now - dataTime;
+    return diffMs > 60000; // 60 seconds = 60000 milliseconds
+  };
+
   const selectedBin = useMemo(() => (bins.length ? bins[0] : null), [bins]);
+  
+  // Check if the selected bin is offline (data is stale)
+  const isOffline = useMemo(() => {
+    if (!selectedBin || !selectedBin.timestamp) return true;
+    return isDataStale(selectedBin.timestamp);
+  }, [selectedBin]);
 
   useEffect(() => {
     // Firestore real-time listener
@@ -102,6 +117,16 @@ function App() {
     };
   }, []);
 
+  // Periodic heartbeat check - updates every 5 seconds to check if data is stale
+  useEffect(() => {
+    const interval = setInterval(() => {
+      // Force re-render to update offline status
+      setLastUpdate(new Date());
+    }, 5000); // Check every 5 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
   if (!selectedBin) {
     return (
       <div className="app-shell">
@@ -116,6 +141,8 @@ function App() {
   const fill = fillPercent(selectedBin.distance);
   const weightPct = weightPercent(selectedBin.weight);
   const isFull = selectedBin.status === 'FULL';
+  
+  // If offline, show last known values but indicate offline status
 
   const fillLabel =
     fill >= 90 ? 'Critical - Empty soon' : fill >= 60 ? 'High level' : 'Operating normally';
@@ -131,20 +158,20 @@ function App() {
           </div>
         </div>
         <div className="status-chip">
-          <span className={`dot ${isConnected ? 'dot-online' : 'dot-offline'}`} />
-          {isConnected ? 'Connected' : 'Disconnected'}
+          <span className={`dot ${isConnected && !isOffline ? 'dot-online' : 'dot-offline'}`} />
+          {isOffline ? 'Offline' : isConnected ? 'Connected' : 'Disconnected'}
         </div>
       </header>
 
       <main className="layout">
-        <section className={`status-panel ${isFull ? 'panel-full' : 'panel-ok'}`}>
+        <section className={`status-panel ${isOffline ? 'panel-offline' : isFull ? 'panel-full' : 'panel-ok'}`}>
           <div className="status-heading">
             <div className="status-text">
-              <div className="status-icon">{isFull ? '⚠️' : '✅'}</div>
+              <div className="status-icon">{isOffline ? '🔴' : isFull ? '⚠️' : '✅'}</div>
               <div>
-                <div className="status-title">{isFull ? 'Bin Full' : 'Bin Available'}</div>
+                <div className="status-title">{isOffline ? 'Bin Offline' : isFull ? 'Bin Full' : 'Bin Available'}</div>
                 <div className="status-subtitle">
-                  {isFull ? 'Action required' : 'Operating normally'}
+                  {isOffline ? 'No data received in the last 60 seconds' : isFull ? 'Action required' : 'Operating normally'}
                 </div>
               </div>
             </div>
@@ -157,32 +184,38 @@ function App() {
         </section>
 
         <section className="cards-grid">
-          <div className="card fill-card">
+          <div className={`card fill-card ${isOffline ? 'card-offline' : ''}`}>
             <div className="card-head">
               <div className="card-title">Fill Level</div>
-              <div className="card-subtitle">{selectedBin.distance.toFixed(0)} cm free</div>
+              <div className="card-subtitle">
+                {isOffline ? 'Last known' : `${selectedBin.distance.toFixed(0)} cm free`}
+              </div>
             </div>
             <div className="metric-large">
               <div className="metric-value">{fill.toFixed(0)}%</div>
             </div>
             <div className="progress">
-              <div className="progress-bar fill" style={{ width: `${fill}%` }} />
+              <div className={`progress-bar fill ${isOffline ? 'progress-offline' : ''}`} style={{ width: `${fill}%` }} />
             </div>
-            <div className="card-foot">{fillLabel}</div>
+            <div className="card-foot">{isOffline ? 'Device offline' : fillLabel}</div>
           </div>
 
-          <div className={`card weight-card ${isFull ? 'weight-alert' : ''}`}>
+          <div className={`card weight-card ${isOffline ? 'card-offline' : isFull ? 'weight-alert' : ''}`}>
             <div className="card-head">
               <div className="card-title">Weight</div>
-              <div className="card-subtitle">{weightPct.toFixed(0)}% capacity</div>
+              <div className="card-subtitle">
+                {isOffline ? 'Last known' : `${weightPct.toFixed(0)}% capacity`}
+              </div>
             </div>
             <div className="metric-large">
               <div className="metric-value">{selectedBin.weight.toFixed(2)} kg</div>
             </div>
             <div className="progress">
-              <div className="progress-bar weight" style={{ width: `${weightPct}%` }} />
+              <div className={`progress-bar weight ${isOffline ? 'progress-offline' : ''}`} style={{ width: `${weightPct}%` }} />
             </div>
-            <div className="card-foot">Max capacity: {MAX_WEIGHT_KG.toFixed(1)} kg</div>
+            <div className="card-foot">
+              {isOffline ? 'Device offline' : `Max capacity: ${MAX_WEIGHT_KG.toFixed(1)} kg`}
+            </div>
           </div>
         </section>
 
