@@ -3,7 +3,7 @@ import './BinCard.css';
 
 function BinCard({ bin }) {
   const isFull = bin.status === 'FULL';
-  const fillPercentage = Math.max(0, Math.min(100, ((20 - bin.distance) / 20) * 100));
+  const fillPercentage = Math.max(0, Math.min(100, ((18 - bin.distance) / 18) * 100));
   
   const formatTime = (timestamp) => {
     const date = new Date(timestamp);

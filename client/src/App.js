@@ -14,7 +14,7 @@ const API_URL =
   process.env.REACT_APP_API_URL || 'https://smart-bin-http-frfux5cgdq-as.a.run.app';
 
 // Constants for calculating fill and weight percentage
-const BIN_HEIGHT_CM = 20;
+const BIN_HEIGHT_CM = 18;
 const MAX_WEIGHT_KG = 12;
 
 function App() {
