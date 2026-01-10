@@ -19,17 +19,6 @@ A real-time web application for monitoring smart garbage bins. Staff garbage col
 - **Cloud Service**: Google Cloud Run (`https://smart-bin-http-frfux5cgdq-as.a.run.app`)
 - **Firebase**: Integrated for authentication and real-time capabilities
 
-
-### Arduino Configuration
-
-Update your Arduino code with the Cloud Run server URL:
-
-```cpp
-const char* serverUrl = "https://smart-bin-http-frfux5cgdq-as.a.run.app/api/bins/data";
-```
-
-See `ARDUINO_SETUP.md` for detailed instructions.
-
 ## API Endpoints
 
 ### POST `/api/bins/data`
