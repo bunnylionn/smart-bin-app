@@ -19,50 +19,6 @@ A real-time web application for monitoring smart garbage bins. Staff garbage col
 - **Cloud Service**: Google Cloud Run (`https://smart-bin-http-frfux5cgdq-as.a.run.app`)
 - **Firebase**: Integrated for authentication and real-time capabilities
 
-## Setup Instructions
-
-### Prerequisites
-
-- Node.js (v14 or higher)
-- npm or yarn
-
-### Backend Setup
-
-1. Navigate to the server directory:
-```bash
-cd server
-```
-
-2. Install dependencies:
-```bash
-npm install
-```
-
-3. Start the server:
-```bash
-npm start
-```
-
-The server will run on `http://localhost:3001` by default.
-
-### Frontend Setup
-
-1. Navigate to the client directory:
-```bash
-cd client
-```
-
-2. Install dependencies:
-```bash
-npm install
-```
-
-3. Start the development server:
-```bash
-npm start
-```
-
-The frontend will run on `http://localhost:3000` by default.
 
 ### Arduino Configuration
 
@@ -124,20 +80,12 @@ smart-bin-app/
 └── README.md
 ```
 
-## Usage
-
-1. Start both backend and frontend servers
-2. Ensure your Arduino device is configured with the correct server URL
-3. Open the web application in your browser
-4. Monitor bins in real-time as data arrives from Arduino devices
-
 ## Deployment
 
 ### Production Server
 
 The backend is deployed on **Google Cloud Run**:
 - **URL**: `https://smart-bin-http-frfux5cgdq-as.a.run.app`
-- The frontend is configured to use this URL by default
 
 ### Environment Variables
 
@@ -153,13 +101,7 @@ Create a `.env` file in the `client` directory to override these values for loca
 ### Firebase Configuration
 
 Firebase is integrated and configured in `client/src/firebase.js`. The configuration includes:
-- Authentication
-- Realtime Database
-- Firestore (available for use)
+- Firestore
 
 See `DEPLOYMENT.md` for more deployment details.
-
-## License
-
-ISC
 
