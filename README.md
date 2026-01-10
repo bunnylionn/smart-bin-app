@@ -1,6 +1,6 @@
 # Smart Bin Monitoring System
 
-A real-time web application for monitoring smart garbage bins. Staff garbage collectors can monitor bin status (weight, distance/fill level) in real-time through a user-friendly dashboard.
+A real-time web application for monitoring smart garbage bins. Staff garbage collectors can monitor bin status (weight and fill level) in real-time through a user-friendly dashboard.
 
 ## Features
 
