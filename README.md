@@ -5,7 +5,7 @@ A real-time web application for monitoring smart garbage bins. Staff garbage col
 ## Features
 
 - 🚀 **Real-time Updates**: Live data streaming via WebSocket
-- 📊 **Dashboard View**: Beautiful, modern UI showing all bins at a glance
+- 📊 **Dashboard View**: Modern UI showing all bins at a glance
 - ⚖️ **Weight Monitoring**: Track bin weight in kilograms
 - 📏 **Distance/Fill Level**: Monitor fill level based on ultrasonic sensor distance
 - 🚨 **Status Alerts**: Visual indicators for FULL vs OK bins
